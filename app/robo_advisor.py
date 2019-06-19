@@ -5,6 +5,10 @@ import csv
 import os
 
 import requests
+from dotenv import load_dotenv
+
+
+load_dotenv() #> loads contents of the .env file into the script's environment
 
 
 def to_usd(my_price):
@@ -12,9 +16,11 @@ def to_usd(my_price):
 #
 # INFO INPUTS
 #
+api_key = os.environ.get("ALPHAVANTAGE_API_KEY") # "demo"
 
+symbol ="MSFT" # TODO: accept user input
 
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 response = requests.get(request_url)
 # print(type(response)) #> <class 'requests.models.Response'>
 # print(response.status_code) #> 200
