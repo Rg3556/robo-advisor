@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 
 import requests
 from dotenv import load_dotenv
+import pprint
+from twilio.rest import Client
+import sendgrid
+from sendgrid.helpers.mail import * # source of Email, Content, Mail, etc.
 
 
 load_dotenv() #> loads contents of the .env file into the script's environment
@@ -240,3 +244,81 @@ plt.title('Stock Prices Over Time')
 plt.style.use('seaborn-darkgrid')
 plt.legend()
 plt.show()
+
+
+
+
+#
+## Challenge of Sending Alerts via Email/SMS
+#
+
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "OOPS, please specify env var called 'TWILIO_ACCOUNT_SID'")
+TWILIO_AUTH_TOKEN  = os.environ.get("TWILIO_AUTH_TOKEN", "OOPS, please specify env var called 'TWILIO_AUTH_TOKEN'")
+SENDER_SMS  = os.environ.get("SENDER_SMS", "OOPS, please specify env var called 'SENDER_SMS'")
+RECIPIENT_SMS  = os.environ.get("RECIPIENT_SMS", "OOPS, please specify env var called 'RECIPIENT_SMS'")
+
+# AUTHENTICATE
+
+client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+# COMPILE REQUEST PARAMETERS (PREPARE THE MESSAGE)
+
+content = "Price Movement Alert! Your selected stock's price has changed by more than 5% within the past day"
+
+# ISSUE REQUEST (SEND SMS)
+the_last_day = dates[1] #> make dynamic
+the_last_close = tsd[the_last_day]['4. close']#> $ & string
+alert_change = float(the_last_close)*0.05
+
+if abs(float(latest_close) - float(the_last_close)) > alert_change :
+    message = client.messages.create(to=RECIPIENT_SMS, from_=SENDER_SMS, body=content)
+
+# PARSE RESPONSE
+
+pp = pprint.PrettyPrinter(indent=4)
+
+print("----------------------")
+print("SMS")
+print("----------------------")
+print("RESPONSE: ", type(message))
+print("FROM:", message.from_)
+print("TO:", message.to)
+print("BODY:", message.body)
+print("PROPERTIES:")
+pp.pprint(dict(message._properties))
+
+
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+MY_EMAIL_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
+
+# AUTHENTICATE
+
+sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
+
+# COMPILE REQUEST PARAMETERS (PREPARE THE EMAIL)
+
+from_email = Email(MY_EMAIL_ADDRESS)
+to_email = Email(MY_EMAIL_ADDRESS)
+subject = "Price Movement Alert!"
+message_text = "Hello, \n\nYour selected stock's price has changed by more than 5% within the past day!\n\nYou can make your investment decisions based on our recommendation.\n\nHappy investing\n\n--Robo Advisor! "
+content = Content("text/plain", message_text)
+mail = Mail(from_email, subject, to_email, content)
+
+# ISSUE REQUEST (SEND EMAIL)
+if abs(float(latest_close) - float(the_last_close)) > alert_change :
+    response = sg.client.mail.send.post(request_body=mail.get())
+
+# PARSE RESPONSE
+
+pp = pprint.PrettyPrinter(indent=4)
+
+print("----------------------")
+print("EMAIL")
+print("----------------------")
+print("RESPONSE: ", type(response))
+print("STATUS:", response.status_code) #> 202 means success
+print("HEADERS:")
+pp.pprint(dict(response.headers))
+print("BODY:")
+print(response.body) #> this might be empty. it's ok.)
