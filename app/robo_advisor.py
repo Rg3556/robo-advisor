@@ -4,6 +4,8 @@ import json
 import csv
 import os
 import datetime
+import pandas 
+import matplotlib.pyplot as plt
 
 import requests
 from dotenv import load_dotenv
@@ -188,6 +190,7 @@ recent_52_week_low = min(low_weekly_prices)
 
 
 
+
 print("-------------------------")
 print("SELECTED STOCK SYMBOL: " + str(selected_stock))
 print("-------------------------")
@@ -210,3 +213,30 @@ print("HAPPY INVESTING!")
 print("-------------------------")
 
 
+#
+## Challenge of Plotting Prices over Time
+# 
+# 
+# 
+stock_prices = "prices.csv"
+
+csv_filepath = os.path.join("data", stock_prices)
+
+prices = pandas.read_csv(csv_filepath)
+
+
+Time = prices ["timestamp"]
+cp = prices["close"]
+hp = prices ["high"]
+lp = prices ["low"]
+op = prices ["open"]
+plt.plot(Time,cp, color='g', label="Closing prices")
+plt.plot(Time,hp, color='r', label="High prices")
+plt.plot(Time,lp, color='b', label="Low prices")
+plt.plot(Time,op, color='y', label="Open prices")
+plt.xlabel('Time')
+plt.ylabel('Prices')
+plt.title('Stock Prices Over Time')
+plt.style.use('seaborn-darkgrid')
+plt.legend()
+plt.show()
