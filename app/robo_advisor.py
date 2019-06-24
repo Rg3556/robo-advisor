@@ -210,6 +210,7 @@ print("-------------------------")
 print("SELECTED STOCK SYMBOL: " + str(selected_stock))
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
+print("-------------------------")
 print("REQUEST AT: " +  str(now.strftime("%Y-%m-%d ")) + str(now.strftime("%I:%M %p")))  # + 2019-06-06 11:31 AM
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
