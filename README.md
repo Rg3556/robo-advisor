@@ -85,9 +85,8 @@ Finally, set an environment variable called RECIPIENT_SMS to specify the recipie
 
 From within the virtual environment, demonstrate your ability to run the Python script from the command-line:
 
-    ```sh
     python robo_advisor.py
-    ```
+    
 
 From the output, you will get:
     -The selected stock symbol(s) (e.g. "Stock: MSFT").
@@ -97,7 +96,7 @@ From the output, you will get:
     -The stock's latest closing price, its recent high price, its recent low price, its recent 52-week high price, and its recent 52-week low price.
     -A recommendation as to whether or not the client should buy the stock and a recomendation explanation
     -A line graph of the stock price changes over time.
-    -Both email and SMS alert if the srock price movement is more than 5% within the past day
+    -Both email and SMS alert if the selected srock's latest price movement is more than 5% within the past day
 
 
 
