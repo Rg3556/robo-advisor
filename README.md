@@ -13,9 +13,9 @@
 Visit the source code repository for the Rg3556's robo-advisor project [github source] (https://github.com/Rg3556/robo-advisor) and click "Fork" to copy the repo under your own control.
 
 Then download (or "clone") your copy of the repo onto your local computer using GitHub Desktop or the command-line. Choose a familiar download location like the Desktop.
-    ```sh
+    
     https://github.com/Rg3556/robo-advisor.git # this is the HTTP address, but you could alternatively use the SSH address
-    ```
+    
 
 Then use your command line application (Mac Terminal or Windows Git Bash) to navigate to the location where you downloaded this repo.
 
@@ -24,38 +24,37 @@ Open the repo with your text editor (VS Code), and follow the instruction of the
 
 After cloning the repo, navigate there from the command-line:
     
-    ```sh
     cd ~/Desktop/robo-advisor
-    ```
+    
 
 
 ### Environment Setup
 
 Create and activate a new Anaconda virtual environment:
 
-    ```sh
+    
     conda create -n stocks-env python=3.7 # (first time only)
     conda activate stocks-env
-    ```
+    
 
 From within the virtual environment, install Python package dependencies:
 
 NOTE: we won't need pytest until/unless addressing the optional "Automated Testing" challenge,so you can feel free to skip this now and return later...
 
-    ```sh
+    
     pip install requests
     pip install python-dotenv
     pip install pandas
     pip install matplotlib #(for the line plot)
     pip install -r requirements.txt #> (loads contents of the .env file into the script's environment, and for Mail and SMS messages)
     pip install pytest # (only if you'll be writing tests)
-    ```
+    
 
 ### AlphaVantage API Setup
 This program will need an API Key to issue requests to the AlphaVantage API to retrieve corresponding stock market data. To request to the AlphaVantage API, go to https://www.alphavantage.co/ and get a free API key. Replace your API key to the environment variable called ALPHAVANTAGE_API_KEY in a file called ".env".
-    ```sh
+    
     ALPHAVANTAGE_API_KEY="YOUR_API_KEY"
-    ```
+    
 
 ### Sendgrid Setup
 
@@ -66,9 +65,8 @@ Update the contents of the ".env" file and replace the API Key value in an envir
 
 From within the virtual environment, install the sendgrid package:
     
-    ```sh
     pip install sendgrid == 6.0.5
-    ```
+
 
 ### SMS Setup
 
@@ -86,17 +84,17 @@ Finally, set an environment variable called RECIPIENT_SMS to specify the recipie
 From within the virtual environment, demonstrate your ability to run the Python script from the command-line:
 
     python robo_advisor.py
-    
+
 
 From the output, you will get:
-    -The selected stock symbol(s) (e.g. "Stock: MSFT").
-    -The date and time when the program was executed.
-    -The date when the data was last refreshed.
-    -A csv file with the selected stock data you acquired from the website.
-    -The stock's latest closing price, its recent high price, its recent low price, its recent 52-week high price, and its recent 52-week low price.
-    -A recommendation as to whether or not the client should buy the stock and a recomendation explanation
-    -A line graph of the stock price changes over time.
-    -Both email and SMS alert if the selected srock's latest price movement is more than 5% within the past day
+- The selected stock symbol(s) (e.g. "Stock: MSFT").
+- The date and time when the program was executed.
+- The date when the data was last refreshed.
+- A csv file with the selected stock data you acquired from the website.
+- The stock's latest closing price, its recent high price, its recent low price, its recent 52-week high price,a nd its recent 52-week low price.
+- A recommendation as to whether or not the client should buy the stock and a recomendation explanation
+- A line graph of the stock price changes over time.
+- Both email and SMS alert if the selected srock's latest price movement is more than 5% within the past day
 
 
 
