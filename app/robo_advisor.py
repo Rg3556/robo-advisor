@@ -51,13 +51,24 @@ parsed_response = json.loads(response.text)
 ## Validation
 #
 
+# Preliminary validations
+if len(selected_stock) < 5 and selected_stock.isupper()==True:
+    print("-------------------------")
+else:
+    
+    print("-------------------------")
+    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again...")
+    print('Shutting the program down...')
+    exit()
+
+     
+# HTTP request validations
 try:
     last_refreshed = parsed_response["Meta Data"]['3. Last Refreshed']
     parsed_response['Time Series (Daily)']
-
 except:
     print("-------------------------")
-    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again...")
+    print("Sorry, couldn't find any trading data for that stock symbol. Please try again with a properly-formed stock symbol, like 'MSFT'...")
     print("-------------------------")
     print('Shutting the program down...')
     exit()
@@ -272,6 +283,8 @@ alert_change = float(the_last_close)*0.05
 
 if abs(float(latest_close) - float(the_last_close)) > alert_change :
     message = client.messages.create(to=RECIPIENT_SMS, from_=SENDER_SMS, body=content)
+else:
+    exit()
 
 # PARSE RESPONSE
 
@@ -308,7 +321,8 @@ mail = Mail(from_email, subject, to_email, content)
 # ISSUE REQUEST (SEND EMAIL)
 if abs(float(latest_close) - float(the_last_close)) > alert_change :
     response = sg.client.mail.send.post(request_body=mail.get())
-
+else:
+    exit()
 # PARSE RESPONSE
 
 pp = pprint.PrettyPrinter(indent=4)
