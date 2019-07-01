@@ -19,13 +19,11 @@ Then download (or "clone") your copy of the repo onto your local computer using 
 
 Then use your command line application (Mac Terminal or Windows Git Bash) to navigate to the location where you downloaded this repo.
 
-Open the repo with your text editor (VS Code), and follow the instruction of the repo's "README.md" file.
-
-
-After cloning the repo, navigate there from the command-line:
-    
     cd ~/Desktop/robo-advisor
-    
+
+
+Open the repo with your text editor (VS Code), and follow the instruction of the repo's "README.md" file to do the following setup.
+
 
 
 ### Environment Setup
@@ -62,7 +60,6 @@ To get receipt via emial, sign up for a Sendgrid free account:https://signup.sen
 
 Update the contents of the ".env" file and replace the API Key value in an environment variable called SENDGRID_API_KEY. Also set and replace with an environment variable called MY_EMAIL_ADDRESS to be the email address you just associated with your SendGrid account (e.g. "abc123@gmail.com").
 
-
 From within the virtual environment, install the sendgrid package:
     
     pip install sendgrid == 6.0.5
@@ -77,6 +74,10 @@ Then create a new project (https://www.twilio.com/console/projects/create) with 
 You'll also need to obtain a Twilio phone number to send the messages from (https://www.twilio.com/console/sms/getting-started/build). After doing so, update the contents of the ".env" file to specify this value (including the plus sign at the beginning) as an environment variable called SENDER_SMS.
 
 Finally, set an environment variable called RECIPIENT_SMS to specify the recipient's phone number (including the plus sign at the beginning).
+
+From within the virtual environment, install the twilio package:
+    
+    pip install twilio
 
 
 ## Usage ##
